@@ -1,17 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="./src/assets/brainwave-symbol.svg"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brainwave</title>
-  </head>
-  <body>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NeuroVerse</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
+<style type="text/tailwindcss">
+        :root {
+            --primary: #00f0ff;
+            --background-light: #0a0a0f;
+            --background-dark: #0f171f;
+            --foreground-light: #e0e0e0;
+            --foreground-dark: #a3a3a3;
+            --subtle-light: #4d5b70;
+            --subtle-dark: #8e9aaf;
+            --border-light: #2a3f31;
+            --border-dark: #1a2a33;
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "var(--primary)",
+                        'background-light': "var(--background-light)",
+                        'background-dark': "var(--background-dark)",
+                        'foreground-light': "var(--foreground-light)",
+                        'foreground-dark': "var(--foreground-dark)",
+                        'subtle-light': "var(--subtle-light)",
+                        'subtle-dark': "var(--subtle-dark)",
+                        'border-light': "var(--border-light)",
+                        'border-dark': "var(--border-dark)",
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "0.75rem",
+                        xl: "1rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-  </body>
+</body>
 </html>
