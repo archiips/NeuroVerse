@@ -5,12 +5,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        "primary": "#3db8f5",
-        "background-light": "#f5f7f8",
-        "background-dark": "#101c22",
+        "eerie-black": "#1A1A1A",
+        "pakistan-green": "#16381A",
+        "hunter-green": "#386641",
+        "fern-green": "#6A994E",
+        "aquamarine": "#A7E09A",
+        primary: "#6A994E",
+        "background-light": "#FFFFFF",
+        "background-dark": "#1A1A1A",
       },
       fontFamily: {
-        display: ["Inter", "sans-serif"],
+        display: ["Space Grotesk"],
       },
       borderRadius: {
         DEFAULT: "0.25rem",
