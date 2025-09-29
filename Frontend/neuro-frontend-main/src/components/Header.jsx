@@ -11,7 +11,7 @@ const Header = () => {
               fillRule="evenodd"
             />
           </svg>
-          <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">NeuroData</h2>
+          <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">NeuroVerse</h2>
         </div>
         <nav className="hidden items-center gap-8 md:flex">
           <a className="text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary" href="#">Explore</a>

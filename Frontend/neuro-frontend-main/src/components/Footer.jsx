@@ -8,7 +8,7 @@ const Footer = () => {
             <a className="text-sm text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary" href="#">Privacy Policy</a>
             <a className="text-sm text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary" href="#">Contact Us</a>
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">© 2024 NeuroData. All rights reserved.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">© 2024 NeuroVerse. All rights reserved.</p>
         </div>
       </div>
     </footer>

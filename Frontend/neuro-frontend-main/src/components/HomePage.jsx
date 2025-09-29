@@ -9,7 +9,7 @@ const HomePage = () => {
               Democratizing Neuroscience Research Data
             </h1>
             <p className="max-w-3xl text-base font-normal text-gray-200 md:text-lg">
-              Explore, visualize, and interact with cutting-edge neuroscience data. NeuroData provides tools for researchers, educators, and enthusiasts to unlock insights from complex datasets.
+              Explore, visualize, and interact with cutting-edge neuroscience data. NeuroVerse provides tools for researchers, educators, and enthusiasts to unlock insights from complex datasets.
             </p>
             <button className="min-w-[150px] cursor-pointer flex items-center justify-center overflow-hidden rounded-lg bg-primary px-6 py-3 text-base font-bold text-white transition-transform hover:scale-105 active:scale-95">
               Get Started
@@ -24,7 +24,7 @@ const HomePage = () => {
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Key Features</h2>
             <p className="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400">
-              NeuroData offers a suite of powerful tools designed to make neuroscience data accessible and actionable.
+              NeuroVerse offers a suite of powerful tools designed to make neuroscience data accessible and actionable.
             </p>
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">

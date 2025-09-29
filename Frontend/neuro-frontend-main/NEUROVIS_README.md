@@ -1,8 +1,8 @@
-# NeuroData - Neuroscience Data Visualization Platform
+# NeuroVerse - Neuroscience Data Visualization Platform
 
 ## Current Implementation - Landing Page
 
-This is the current implementation of the NeuroData landing page built with React, Vite, and TailwindCSS.
+This is the current implementation of the NeuroVerse landing page built with React, Vite, and TailwindCSS.
 
 ### ✅ What's Implemented
 
@@ -29,7 +29,7 @@ src/
 
 #### 🎨 **Design System**
 - **Color Palette**:
-  - Primary: `#3db8f5` (NeuroData Blue) with full scale (50-950)
+  - Primary: `#3db8f5` (NeuroVerse Blue) with full scale (50-950)
   - Background Light: `#f8fafc`
   - Background Dark: `#0f172a`
   - Surface colors for light/dark modes
@@ -41,7 +41,7 @@ src/
 
 ##### Header Component (`src/components/Header.jsx`)
 - Sticky navigation with backdrop blur
-- NeuroData logo (SVG)
+- NeuroVerse logo (SVG)
 - Navigation menu (Explore, Datasets, Publications, About)
 - Get Started CTA button
 - Responsive design (mobile menu hidden)
@@ -132,7 +132,7 @@ Current dependencies installed:
 
 ✅ **Completed Features:**
 - Responsive landing page layout
-- NeuroData branding and theme
+- NeuroVerse branding and theme
 - Hero section with background image
 - Features showcase section
 - Call-to-action section
