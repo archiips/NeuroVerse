@@ -6,11 +6,11 @@ export default {
     extend: {
       colors: {
         "eerie-black": "#1A1A1A",
-        "pakistan-green": "#16381A",
-        "hunter-green": "#386641",
-        "fern-green": "#6A994E",
-        "aquamarine": "#A7E09A",
-        primary: "#6A994E",
+        "dark-border": "#161B22",
+        "secondary-blue": "#1F6FEB",
+        "primary-blue": "#58A6FF",
+        "light-blue": "#9ECFFF",
+        primary: "#58A6FF",
         "background-light": "#FFFFFF",
         "background-dark": "#1A1A1A",
       },

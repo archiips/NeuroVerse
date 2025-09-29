@@ -7,10 +7,10 @@ const HomePage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tighter leading-tight text-foreground-light dark:text-foreground-dark">
-                Visualize Your Neuroscience Data Like Never Before
+                Simplifying Complex Neuroscience Data
               </h1>
               <p className="mt-6 text-lg text-subtle-light dark:text-subtle-dark max-w-xl mx-auto lg:mx-0">
-                NeuroVerse transforms complex neuroscience data into intuitive and interactive visualizations, empowering discovery. Explore sample datasets or upload your own.
+                Explore, visualize, and interact with cutting-edge neuroscience data. NeuroVerse provides tools for researchers, educators, and enthusiasts to unlock insights from complex datasets.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
                 <a className="inline-block px-8 py-3 text-base font-bold rounded-lg bg-primary text-background-light hover:bg-opacity-90 transition-transform transform hover:scale-105 shadow-lg shadow-primary/50" href="#">Explore Sample Data</a>

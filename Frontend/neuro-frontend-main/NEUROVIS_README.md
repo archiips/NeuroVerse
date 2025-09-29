@@ -175,4 +175,4 @@ npm run preview
 - Ready for incremental feature additions
 - Uses modern React patterns and best practices
 
-This implementation provides a solid foundation for the NeuroVis platform with a polished landing page that can be expanded step by step.
+This implementation provides a solid foundation for the NeuroVerse platform with a polished landing page that can be expanded step by step.
