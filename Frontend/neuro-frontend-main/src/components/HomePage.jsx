@@ -1,3 +1,5 @@
+import BrainCanvas from './BrainCanvas';
+
 const HomePage = () => {
   return (
     <>
@@ -17,13 +19,7 @@ const HomePage = () => {
                 <a className="inline-block px-8 py-3 text-base font-bold rounded-lg bg-subtle-light/20 hover:bg-subtle-light/30 text-foreground-light dark:text-foreground-dark transition-transform transform hover:scale-105" href="#">Upload Your Data</a>
               </div>
             </div>
-            <div className="w-full aspect-square rounded-xl bg-center bg-cover relative overflow-hidden shadow-xl shadow-primary/30" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAk6dZlwkmn04CGBVeZDgMIbIHSbaQ651reQLC_AUFqlS0vuE7nKJgHPP9hrNcZSEHLf2F8idNjShTku5gZkFqiePzkwuaVtyp6YWyVZc5_4k7zh5WAHBdNar5QnOzVGP3Mql4Vx0hlaqfqjYb7Dc1QSvFUfSz0bpSUl5UPsQy-Kt0uSTuEmWJNg-ZICk7I3TfIin5p1N2k_xJEt5qe0NqqjVssqgCGkAojMNINwKbnCzG0itpvAgLbEGbLl-LhaKA9WRbUVj4yObA")'}}>
-              <div className="absolute inset-0 bg-gradient-to-t from-background-light via-transparent to-transparent dark:from-background-dark"></div>
-              <div className="absolute bottom-4 left-4 right-4 text-center">
-                <h3 className="text-lg font-bold text-foreground-light dark:text-foreground-dark mb-2">Brain Activity Patterns</h3>
-                <p className="text-sm text-subtle-dark dark:text-subtle-dark">Live preview of EEG data segmentation.</p>
-              </div>
-            </div>
+            <BrainCanvas />
           </div>
         </div>
       </section>
