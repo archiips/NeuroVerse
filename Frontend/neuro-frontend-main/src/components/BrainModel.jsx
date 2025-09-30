@@ -139,7 +139,7 @@ const BrainModel = () => {
     <div className="w-full aspect-square rounded-xl relative overflow-hidden shadow-xl shadow-primary/30">
       <div ref={mountRef} className="w-full h-full" />
       <div className="absolute bottom-4 left-4 right-4 text-center pointer-events-none">
-        <h3 className="text-lg font-bold text-white drop-shadow-lg mb-2">Interactive Brain Activity</h3>
+        <h3 className="text-lg font-bold text-white drop-shadow-lg mb-2">Interactive Brain</h3>
         <p className="text-sm text-gray-200 drop-shadow-md">{status}</p>
       </div>
     </div>
