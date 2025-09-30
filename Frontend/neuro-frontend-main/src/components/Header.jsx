@@ -23,9 +23,8 @@ const Header = () => {
             className={`text-sm font-medium ${location.pathname === '/datasets' ? 'font-bold text-secondary-blue dark:text-light-blue' : 'text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary'}`}
             to="/datasets"
           >
-            Datasets
+            Datasets & Visualizations
           </Link>
-          <a className="text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary" href="#">Visualizations</a>
           <a className="text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary" href="#">About me</a>
         </nav>
         <div className="flex items-center gap-4">

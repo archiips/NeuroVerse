@@ -1,24 +1,30 @@
+import { Link } from "react-router-dom";
+
 const DatasetsPage = () => {
   const datasets = [
     {
+      id: "midnight-scan-club",
       title: "Midnight Scan Club",
       description: "A high-quality, long-term fMRI dataset tracking individual brain functional connectivity.",
       image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCEFbnsvNNyOYP9sf-sw4_6vUIouIPKbsBr-_wFg4RHZJO4cv5BPzVz3OFcCUkGcEtKGdfMTCscaudtI3FMH9Dc23p1mah-8PiEwVMIySCGdbHu1lJeEe3kxRtA5ITwb8vv_sQdHm800Y_fk7i8fTJa51RY_WlJAVoBqtuj3doc2lAoHAFmLnmnJfU_TUOBELvK9an-veojGAD1KESQ-RBdEkQmDIr7e3uK3ELmiyMAr6pqhxkxdA9phH8PCdr3GAfqtF3CpDzbHQ4",
       link: "#"
     },
     {
+      id: "human-connectome",
       title: "Human Connectome Project",
       description: "Maps neural pathways to understand the structural and functional connectivity of the human brain.",
       image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCLYAw2JGh2gTbbcKQmi9BrVFYM7W2ed5szCOePE7dughf4K6BVOLHfHrDwzn48nWhl42xbA4XJ3gjOSQxG9B80eNeKshIoZo7O4YM2YzifyOvITydSL-lC480a2YBq0mlLVb8fc8pCcoST5u-wQsntr-5phaPiCaHtGdIzoGugm-W-ERDUGXVZTxTVhYzPgi-0uWyP1JutORRLOIutTkEPtzRfKAmVD14za4v0sCWz2dB-YsmG7rZKIQXk7DDMkHlzsZarZxz1Q8U",
       link: "#"
     },
     {
+      id: "adni",
       title: "Alzheimer's Disease Neuroimaging Initiative",
       description: "Investigates biomarkers for the early detection and tracking of Alzheimer's disease.",
       image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA4eIgjcKncznIf-S0_JdVMlLxrl8mmpUnmTQSje1SmRpQEZJt0YxZUTDuFcbEsACABUWXAk_7FalGVjOBqRj_Nb00XdDZLiPi2XRjC4YwfHrGZxxmVOecyq0GtN6ZdaVP59b4Rzz9wL7EAb9I0osKFOsVnWSMmWIurKoAxJjdotarK7e1rZqL4svS1laFFAY6zgbmoxcNuYHBa3k7Ta69GFbozu_G8uwftOafhOGCgoVemXL5aAr3CxigjwdyW7CTpRtPqHk1VVlg",
       link: "#"
     },
     {
+      id: "abide",
       title: "Autism Brain Imaging Data Exchange",
       description: "A large-scale data sharing initiative for accelerating the understanding of autism spectrum disorder.",
       image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAyUssXR0M4HUGmffyS_rDWAHf41CuQrE9A0W9pYxoTIQEExqpvu2B1fQ7ta_wGsYNlWoGia-9rLhuA_mqb8T-uWisZijNc2zpvC79DGB_NdpzFyxiHupKzaoWXSjjTV8O9CfsAL4rXhdaaH4t8RtszbECyx2e0luJQyVWhZQjndH23BBKUnej3RAepQAYbqtTglpOy30__uSXRlllCrZFi4kWBsn5pKE0Yc7z-V-AFO7N2Q_Ssw02Vuirui5evHl6QLSZdlA9Sb3M",
@@ -34,9 +40,10 @@ const DatasetsPage = () => {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {datasets.map((dataset, index) => (
-          <div
+          <Link
             key={index}
-            className="group flex flex-col overflow-hidden rounded-lg border border-gray-200/80 bg-white shadow-sm transition-all hover:shadow-lg dark:border-dark-border/80 dark:bg-dark-border/30 dark:hover:border-secondary-blue/50"
+            to={`/datasets/${dataset.id}`}
+            className="group flex flex-col overflow-hidden rounded-lg border border-gray-200/80 bg-white shadow-sm transition-all hover:shadow-lg dark:border-dark-border/80 dark:bg-dark-border/30 dark:hover:border-secondary-blue/50 cursor-pointer"
           >
             <div className="relative aspect-video">
               <img
@@ -53,15 +60,12 @@ const DatasetsPage = () => {
               <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                 {dataset.description}
               </p>
-              <a
-                className="inline-flex items-center gap-1 text-sm font-medium text-secondary-blue hover:underline dark:text-light-blue"
-                href={dataset.link}
-              >
-                View Original Source
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-secondary-blue hover:underline dark:text-light-blue">
+                View Dataset Details
                 <span className="material-symbols-outlined text-base">arrow_forward</span>
-              </a>
+              </span>
             </div>
-          </div>
+          </Link>
         ))}
 
         {/* Skeleton loaders for upcoming datasets */}
