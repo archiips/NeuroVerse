@@ -34,29 +34,29 @@ export default function BrainCanvas() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     mount.appendChild(renderer.domElement);
 
-    // Enhanced Lighting (NeuroVerse theme with shadows)
+    // Enhanced Lighting (Blue theme to match website #58a6ff)
     const ambientLight = new THREE.AmbientLight(0x404040, 1.2);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0x00f0ff, 3);
+    const directionalLight = new THREE.DirectionalLight(0x58a6ff, 3.5);
     directionalLight.position.set(5, 5, 5);
     directionalLight.castShadow = true;
     scene.add(directionalLight);
 
-    const pointLight = new THREE.PointLight(0xff6b9d, 2.5, 15);
+    const pointLight = new THREE.PointLight(0x58a6ff, 2.5, 15);
     pointLight.position.set(-3, 0, 3);
     scene.add(pointLight);
 
-    const rimLight = new THREE.DirectionalLight(0x4d5b70, 1.5);
+    const rimLight = new THREE.DirectionalLight(0x3d7acc, 1.5);
     rimLight.position.set(-5, -2, -5);
     scene.add(rimLight);
 
     // Additional accent lights for visual appeal
-    const topLight = new THREE.PointLight(0x00f0ff, 1.5, 12);
+    const topLight = new THREE.PointLight(0x7bb8ff, 1.5, 12);
     topLight.position.set(0, 5, 0);
     scene.add(topLight);
 
-    const bottomLight = new THREE.PointLight(0xff6b9d, 1.2, 10);
+    const bottomLight = new THREE.PointLight(0x4590e6, 1.2, 10);
     bottomLight.position.set(0, -3, 0);
     scene.add(bottomLight);
 
@@ -88,7 +88,7 @@ export default function BrainCanvas() {
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
     const particlesMaterial = new THREE.PointsMaterial({
-      color: 0x00f0ff,
+      color: 0x58a6ff,
       size: 0.08,
       transparent: true,
       opacity: 0.6,
@@ -124,16 +124,16 @@ export default function BrainCanvas() {
 
     controls.addEventListener('start', handleInteraction);
 
-    // Enhanced Material factory function
+    // Enhanced Material factory function (Blue theme)
     const createBrainMaterial = () => {
       return new THREE.MeshPhongMaterial({
-        color: 0xff6b9d,
+        color: 0x58a6ff,
         shininess: 150,
         transparent: true,
         opacity: 0.95,
-        emissive: 0x00f0ff,
+        emissive: 0x4590e6,
         emissiveIntensity: 0.3,
-        specular: 0x00f0ff,
+        specular: 0x7bb8ff,
         reflectivity: 0.8
       });
     };
@@ -202,13 +202,13 @@ export default function BrainCanvas() {
         console.error("Error loading brain model:", error);
         setLoadingStatus("Creating fallback brain...");
 
-        // Fallback Brain - procedural generation with enhanced visuals
+        // Fallback Brain - procedural generation with enhanced visuals (Blue theme)
         brainMesh = new THREE.Group();
 
-        // Main sphere with pink material and cyan emissive glow
+        // Main sphere with blue material and emissive glow
         const mainGeometry = new THREE.SphereGeometry(1.5, 32, 32);
         const mainMaterial = createBrainMaterial();
-        mainMaterial.emissive = new THREE.Color(0x00f0ff);
+        mainMaterial.emissive = new THREE.Color(0x58a6ff);
         mainMaterial.emissiveIntensity = 0.4;
         const mainSphere = new THREE.Mesh(mainGeometry, mainMaterial);
         mainSphere.castShadow = true;
@@ -217,11 +217,11 @@ export default function BrainCanvas() {
 
         // 5 smaller region spheres positioned around main sphere
         const regions = [
-          { pos: [0.8, 1.2, 0.5], color: 0x00f0ff, radius: 0.4 }, // Top cyan 1
-          { pos: [-0.8, 1.2, 0.5], color: 0x00f0ff, radius: 0.4 }, // Top cyan 2
-          { pos: [0, -1.2, 0], color: 0x4d5b70, radius: 0.5 }, // Bottom blue-gray (cerebellum)
-          { pos: [0.6, 0.3, -1.4], color: 0xff6b9d, radius: 0.35 }, // Back region 1
-          { pos: [-0.6, 0.3, -1.4], color: 0xff6b9d, radius: 0.35 } // Back region 2
+          { pos: [0.8, 1.2, 0.5], color: 0x7bb8ff, radius: 0.4 }, // Top light blue 1
+          { pos: [-0.8, 1.2, 0.5], color: 0x7bb8ff, radius: 0.4 }, // Top light blue 2
+          { pos: [0, -1.2, 0], color: 0x3d7acc, radius: 0.5 }, // Bottom darker blue (cerebellum)
+          { pos: [0.6, 0.3, -1.4], color: 0x58a6ff, radius: 0.35 }, // Back region 1
+          { pos: [-0.6, 0.3, -1.4], color: 0x58a6ff, radius: 0.35 } // Back region 2
         ];
 
         regions.forEach(({ pos, color, radius }) => {
@@ -233,7 +233,7 @@ export default function BrainCanvas() {
             opacity: 0.95,
             emissive: color,
             emissiveIntensity: 0.3,
-            specular: 0x00f0ff,
+            specular: 0x7bb8ff,
             reflectivity: 0.8
           });
           const sphere = new THREE.Mesh(geometry, material);
@@ -287,12 +287,13 @@ export default function BrainCanvas() {
             const glowIntensity = 0.3 + Math.sin(time * 0.8) * 0.15;
             child.material.emissiveIntensity = glowIntensity;
 
-            // Subtle color shift in emissive (cyan to pink gradient)
+            // Subtle color shift in emissive (blue gradient variations)
             const colorShift = (Math.sin(time * 0.3) + 1) * 0.5; // 0 to 1
+            // Shift between darker blue and lighter blue (#4590e6 to #7bb8ff)
             child.material.emissive.setRGB(
-              colorShift * 0.5, // Red channel
-              0.94 * (1 - colorShift * 0.5), // Green channel
-              1.0 * (1 - colorShift * 0.3)  // Blue channel (stays more cyan)
+              0.27 + colorShift * 0.21, // Red: 0.27 to 0.48
+              0.56 + colorShift * 0.16, // Green: 0.56 to 0.72
+              0.90 + colorShift * 0.10  // Blue: 0.90 to 1.0
             );
           }
         });
