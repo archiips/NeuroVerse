@@ -43,7 +43,7 @@ const BrainModel = () => {
         controls.autoRotate = true;
         controls.autoRotateSpeed = 2;
 
-        camera.position.set(0, 0, 5);
+        camera.position.set(0, 0, 4);
 
         setStatus('Loading brain model...');
 
