@@ -49,7 +49,7 @@ const DatasetDetail = () => {
             <p className="text-[#9dabb9] text-sm font-normal leading-normal">Dataset: {dataset.name}</p>
           </div>
           <button
-            onClick={() => navigate('/datasets')}
+            onClick={() => navigate(`/datasets/${id}/visualize`)}
             className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-primary-blue text-white text-sm font-medium leading-normal hover:bg-secondary-blue transition-colors"
           >
             <span className="truncate">Data Visualization</span>

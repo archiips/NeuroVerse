@@ -4,6 +4,8 @@ import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
 import DatasetsPage from "./components/DatasetsPage";
 import DatasetDetail from "./components/DatasetDetail";
+import DataVisualization from "./components/DataVisualization";
+import DemoExperience from "./components/DemoExperience";
 
 const App = () => {
   return (
@@ -12,8 +14,10 @@ const App = () => {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/demo" element={<DemoExperience />} />
           <Route path="/datasets" element={<DatasetsPage />} />
           <Route path="/datasets/:id" element={<DatasetDetail />} />
+          <Route path="/datasets/:id/visualize" element={<DataVisualization />} />
         </Routes>
       </main>
       <Footer />

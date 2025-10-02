@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BrainCanvas from './BrainCanvas';
 
 const HomePage = () => {
@@ -15,7 +16,13 @@ const HomePage = () => {
                 Explore, visualize, and interact with cutting-edge neuroscience data. NeuroVerse provides tools for researchers, educators, and enthusiasts to unlock insights from complex datasets.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                <a className="inline-block px-8 py-3 text-base font-bold rounded-lg bg-primary text-background-light hover:bg-opacity-90 transition-transform transform hover:scale-105 shadow-lg shadow-primary/50" href="#">Explore Sample Data</a>
+                <Link
+                  to="/demo"
+                  onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}
+                  className="inline-block px-8 py-3 text-base font-bold rounded-lg bg-primary text-background-light hover:bg-opacity-90 transition-transform transform hover:scale-105 shadow-lg shadow-primary/50"
+                >
+                  Explore Sample Data
+                </Link>
                 <a className="inline-block px-8 py-3 text-base font-bold rounded-lg bg-subtle-light/20 hover:bg-subtle-light/30 text-foreground-light dark:text-foreground-dark transition-transform transform hover:scale-105" href="#">Upload Your Data</a>
               </div>
             </div>
@@ -69,9 +76,13 @@ const HomePage = () => {
       <section className="bg-subtle-light/20 dark:bg-subtle-dark/50 py-20 sm:py-24">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Ready to Explore?</h2>
-          <a className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-base font-bold text-background-dark shadow-lg transition-all hover:bg-white hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark" href="#">
+          <Link
+            to="/datasets"
+            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}
+            className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-base font-bold text-background-dark shadow-lg transition-all hover:bg-white hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark"
+          >
             Explore Datasets
-          </a>
+          </Link>
         </div>
       </section>
     </>
