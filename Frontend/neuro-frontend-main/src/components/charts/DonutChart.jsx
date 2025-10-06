@@ -441,11 +441,6 @@ export default function DonutChart({
               >
                 <span className="text-primary-blue text-xs font-bold uppercase tracking-wider">Category Details</span>
               </motion.div>
-              <motion.div
-                className="w-3 h-3 rounded-full bg-green-500"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
             </div>
 
             <motion.div
