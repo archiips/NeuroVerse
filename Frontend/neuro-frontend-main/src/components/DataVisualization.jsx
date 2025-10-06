@@ -1,10 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import BarChart3D from "./charts/BarChart3D";
+import DonutChart from "./charts/DonutChart";
 
 const DataVisualization = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("diagnosis");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [chartType, setChartType] = useState("3d"); // "3d" or "donut"
 
   // Sample dataset information
   const datasetInfo = {
@@ -154,38 +158,61 @@ const DataVisualization = () => {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-semibold text-white">Diagnosis Distribution</h3>
-                  <p className="text-sm text-[#9dabb9]">Interactive 3D visualization with 3 categories</p>
+                  <p className="text-sm text-[#9dabb9]">
+                    {chartType === "3d"
+                      ? `Interactive 3D visualization with ${diagnosisData.categories.length} categories`
+                      : `Interactive donut chart showing ${diagnosisData.categories.length} categories`
+                    }
+                  </p>
                 </div>
                 <div className="flex space-x-2">
-                  <button className="bg-primary-blue text-white px-4 py-2 rounded-lg flex items-center space-x-2 text-sm">
+                  <button
+                    onClick={() => setChartType("3d")}
+                    className={`px-4 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors ${
+                      chartType === "3d"
+                        ? "bg-primary-blue text-white"
+                        : "bg-[#3b4754] text-white hover:bg-[#4b5764]"
+                    }`}
+                  >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5z" />
                     </svg>
                     <span>3D Bar Chart</span>
                   </button>
-                  <button className="bg-[#3b4754] text-white px-4 py-2 rounded-lg flex items-center space-x-2 text-sm hover:bg-[#4b5764] transition-colors">
+                  <button
+                    onClick={() => setChartType("donut")}
+                    className={`px-4 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors ${
+                      chartType === "donut"
+                        ? "bg-primary-blue text-white"
+                        : "bg-[#3b4754] text-white hover:bg-[#4b5764]"
+                    }`}
+                  >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                     </svg>
-                    <span>2D Scatter Plot</span>
+                    <span>Donut Chart</span>
                   </button>
                 </div>
               </div>
 
               {/* Chart Visualization */}
-              <div className="relative h-[450px] bg-eerie-black rounded-lg overflow-hidden flex items-end justify-center p-8 gap-8">
-                {diagnosisData.categories.map((category, idx) => (
-                  <div key={idx} className="flex flex-col items-center gap-4">
-                    <div
-                      className={`w-24 ${category.color} rounded-t-lg transition-all hover:opacity-80`}
-                      style={{ height: `${(category.count / diagnosisData.totalSubjects) * 400}px` }}
-                    ></div>
-                    <div className="text-center">
-                      <p className="text-white font-semibold">{category.name}</p>
-                      <p className="text-[#9dabb9] text-sm">{category.count}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="relative h-[450px] bg-eerie-black rounded-lg overflow-hidden">
+                {chartType === "3d" ? (
+                  <BarChart3D
+                    data={diagnosisData.categories}
+                    totalSubjects={diagnosisData.totalSubjects}
+                    activeCategory={selectedCategory}
+                    onBarClick={(categoryName) => setSelectedCategory(categoryName)}
+                  />
+                ) : (
+                  <DonutChart
+                    data={diagnosisData.categories}
+                    totalSubjects={diagnosisData.totalSubjects}
+                    activeCategory={selectedCategory}
+                    onSegmentClick={(categoryName) => setSelectedCategory(categoryName)}
+                  />
+                )}
               </div>
 
               <div className="mt-4 text-xs text-[#9dabb9] flex items-center space-x-2">

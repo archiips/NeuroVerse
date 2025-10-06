@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import BarChart3D from "./charts/BarChart3D";
+import DonutChart from "./charts/DonutChart";
 
 const DemoExperience = () => {
   const [showTooltip, setShowTooltip] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [activeView, setActiveView] = useState('bar'); // 'bar' or 'donut'
+  const [activeCategory, setActiveCategory] = useState(null);
 
   // Featured dataset for demo
   const featuredDataset = {
@@ -17,6 +21,15 @@ const DemoExperience = () => {
     sessions: "12+ sessions per participant"
   };
 
+  // Sample diagnosis data for charts
+  const diagnosisData = [
+    { name: "Autism", count: 85, percentage: 41.5, color: "bg-blue-500" },
+    { name: "ADHD", count: 50, percentage: 24.4, color: "bg-red-500" },
+    { name: "Healthy", count: 70, percentage: 34.1, color: "bg-green-500" }
+  ];
+
+  const totalSubjects = 205;
+
   // Hide tooltip after 8 seconds
   useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(false), 8000);
@@ -28,6 +41,10 @@ const DemoExperience = () => {
       setHasInteracted(true);
       setShowTooltip(false);
     }
+  };
+
+  const handleCategoryClick = (categoryName) => {
+    setActiveCategory(categoryName);
   };
 
   return (
@@ -112,98 +129,71 @@ const DemoExperience = () => {
 
           {/* Right Panel - Visualizations */}
           <div className="space-y-6">
-            {/* Header */}
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                Interactive Data Visualization
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                Explore the metadata through interactive charts. <span className="font-semibold text-primary-blue">Try hovering over the charts!</span>
-              </p>
-            </div>
-
-            {/* Tooltip */}
-            {showTooltip && (
-              <div className="bg-primary-blue text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-pulse">
-                <span className="text-2xl">👆</span>
-                <p className="text-sm font-medium">
-                  Hover over the charts below to see detailed information!
+            {/* Header with View Toggle */}
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  Diagnosis Distribution
+                </h1>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Explore diagnosis data through interactive charts. <span className="font-semibold text-primary-blue">Try hovering and clicking!</span>
                 </p>
               </div>
-            )}
 
-
-            {/* Charts Grid - All Visible at Once */}
-            <div className="grid md:grid-cols-3 gap-6">
-
-              {/* Diagnosis Distribution */}
-              <div
-                onMouseEnter={handleChartInteraction}
-                className="rounded-lg border border-gray-200/80 dark:border-dark-border/80 bg-white dark:bg-dark-border/30 p-6 hover:shadow-lg transition-all cursor-pointer"
-              >
-                <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
-                  Diagnosis Distribution
-                </h3>
-                <p className="text-3xl font-bold text-primary-blue dark:text-light-blue mb-1">100</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">Total Subjects</p>
-
-                <div className="grid grid-flow-col gap-3 grid-rows-[1fr_auto] items-end justify-items-center min-h-[140px]">
-                  <div className="bg-primary-blue/70 dark:bg-primary-blue/50 w-full rounded-t" style={{ height: "70%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Healthy</p>
-
-                  <div className="bg-secondary-blue/70 dark:bg-secondary-blue/50 w-full rounded-t" style={{ height: "50%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">ADHD</p>
-
-                  <div className="bg-light-blue/70 dark:bg-light-blue/30 w-full rounded-t" style={{ height: "85%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Autism</p>
-                </div>
+              {/* View Toggle */}
+              <div className="flex items-center gap-3 bg-dark-border/30 dark:bg-dark-border/50 rounded-lg p-1">
+                <button
+                  onClick={() => setActiveView('bar')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-all ${
+                    activeView === 'bar'
+                      ? 'bg-primary-blue text-white shadow-lg'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-primary-blue'
+                  }`}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  3D Bar Chart
+                </button>
+                <button
+                  onClick={() => setActiveView('donut')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-all ${
+                    activeView === 'donut'
+                      ? 'bg-primary-blue text-white shadow-lg'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-primary-blue'
+                  }`}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                  </svg>
+                  Donut Chart
+                </button>
               </div>
+            </div>
 
-              {/* Sex Distribution */}
-              <div
-                onMouseEnter={handleChartInteraction}
-                className="rounded-lg border border-gray-200/80 dark:border-dark-border/80 bg-white dark:bg-dark-border/30 p-6 hover:shadow-lg transition-all cursor-pointer"
-              >
-                <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
-                  Sex Distribution
-                </h3>
-                <p className="text-3xl font-bold text-secondary-blue dark:text-primary-blue mb-1">100</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">Total Subjects</p>
 
-                <div className="grid grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center min-h-[140px]">
-                  <div className="bg-primary-blue/70 dark:bg-primary-blue/50 w-full rounded-t" style={{ height: "92%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Male (46%)</p>
-
-                  <div className="bg-secondary-blue/70 dark:bg-secondary-blue/50 w-full rounded-t" style={{ height: "100%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">Female (54%)</p>
-                </div>
-              </div>
-
-              {/* Age Distribution */}
-              <div
-                onMouseEnter={handleChartInteraction}
-                className="rounded-lg border border-gray-200/80 dark:border-dark-border/80 bg-white dark:bg-dark-border/30 p-6 hover:shadow-lg transition-all cursor-pointer"
-              >
-                <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
-                  Age Distribution
-                </h3>
-                <p className="text-3xl font-bold text-light-blue dark:text-light-blue mb-1">100</p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">Total Subjects</p>
-
-                <div className="grid grid-flow-col gap-2 grid-rows-[1fr_auto] items-end justify-items-center min-h-[140px]">
-                  <div className="bg-primary-blue/70 dark:bg-primary-blue/50 w-full rounded-t" style={{ height: "40%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">18-25</p>
-
-                  <div className="bg-secondary-blue/70 dark:bg-secondary-blue/50 w-full rounded-t" style={{ height: "100%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">26-35</p>
-
-                  <div className="bg-light-blue/70 dark:bg-light-blue/30 w-full rounded-t" style={{ height: "65%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">36-45</p>
-
-                  <div className="bg-primary-blue/50 dark:bg-primary-blue/30 w-full rounded-t" style={{ height: "30%" }}></div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400">46+</p>
-                </div>
-              </div>
+            {/* Interactive Chart */}
+            <div
+              className="rounded-lg border-2 border-gray-200/80 dark:border-dark-border/80 bg-white dark:bg-dark-border/30 overflow-hidden"
+              onMouseEnter={handleChartInteraction}
+              style={{ height: '600px' }}
+            >
+              {activeView === 'bar' ? (
+                <BarChart3D
+                  data={diagnosisData}
+                  totalSubjects={totalSubjects}
+                  activeCategory={activeCategory}
+                  onBarClick={handleCategoryClick}
+                />
+              ) : (
+                <DonutChart
+                  data={diagnosisData}
+                  totalSubjects={totalSubjects}
+                  activeCategory={activeCategory}
+                  onSegmentClick={handleCategoryClick}
+                />
+              )}
             </div>
 
             {/* Educational Callouts */}
