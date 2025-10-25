@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { datasetAPI } from "../services/api";
+import { useState } from "react";
 import BarChart3D from "./charts/BarChart3D";
 import DonutChart from "./charts/DonutChart";
 
@@ -10,193 +9,57 @@ const DataVisualization = () => {
   const [activeTab, setActiveTab] = useState("diagnosis");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [chartType, setChartType] = useState("3d"); // "3d" or "donut"
-  const [dataset, setDataset] = useState(null);
-  const [diagnosisData, setDiagnosisData] = useState(null);
-  const [sexData, setSexData] = useState(null);
-  const [ageData, setAgeData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDatasetAndStats();
-  }, [id]);
-
-  const fetchDatasetAndStats = async () => {
-    try {
-      setLoading(true);
-      // Fetch dataset details
-      const datasetResponse = await datasetAPI.getDatasetById(id);
-      const datasetData = datasetResponse.data;
-
-      setDataset({
-        name: datasetData.name || datasetData.openneuro_id,
-        description: datasetData.description || "This dataset includes recordings from participants performing various cognitive tasks.",
-        participants: datasetData.participant_count || 0,
-        tasks: 5, // Could be added to backend later
-        modality: "fMRI" // Could be added to backend later
-      });
-
-      // Fetch statistics
-      try {
-        const statsResponse = await datasetAPI.getSummaryStats(id);
-        const stats = statsResponse.data;
-
-        const colors = ["bg-blue-500", "bg-green-500", "bg-red-500", "bg-yellow-500", "bg-purple-500", "bg-pink-500", "bg-indigo-500"];
-
-        // Map diagnosis stats
-        const diagnosisCategories = stats.diagnosis.map((item, idx) => ({
-          name: item.label,
-          count: item.count,
-          percentage: parseFloat(item.percentage),
-          color: colors[idx % colors.length]
-        }));
-
-        setDiagnosisData({
-          totalSubjects: stats.total_participants,
-          averageAge: stats.age_stats?.mean || 0,
-          categories: diagnosisCategories
-        });
-
-        // Map sex stats
-        const sexCategories = stats.sex.map((item, idx) => ({
-          name: item.label,
-          count: item.count,
-          percentage: parseFloat(item.percentage),
-          color: colors[idx % colors.length]
-        }));
-
-        setSexData({
-          totalSubjects: stats.total_participants,
-          averageAge: stats.age_stats?.mean || 0,
-          categories: sexCategories
-        });
-
-        // Map age distribution stats
-        const ageCategories = stats.age_distribution.map((item, idx) => ({
-          name: item.bin,
-          count: item.count,
-          percentage: stats.total_participants > 0 ? parseFloat(((item.count / stats.total_participants) * 100).toFixed(1)) : 0,
-          color: colors[idx % colors.length]
-        }));
-
-        setAgeData({
-          totalSubjects: stats.total_participants,
-          averageAge: stats.age_stats?.mean || 0,
-          categories: ageCategories,
-          ageStats: stats.age_stats
-        });
-      } catch (error) {
-        console.error("Error fetching stats:", error);
-        // Fallback to mock data for visualization
-        setDiagnosisData({
-          totalSubjects: datasetData.participant_count || 205,
-          averageAge: 68.3,
-          categories: [
-            { name: "Autism", count: 85, percentage: 41.5, color: "bg-blue-500" },
-            { name: "Healthy", count: 70, percentage: 34.1, color: "bg-green-500" },
-            { name: "ADHD", count: 50, percentage: 24.4, color: "bg-red-500" }
-          ]
-        });
-
-        // Add fallback for sex and age data
-        setSexData({
-          totalSubjects: datasetData.participant_count || 205,
-          averageAge: 68.3,
-          categories: [
-            { name: "Male", count: 100, percentage: 48.8, color: "bg-blue-500" },
-            { name: "Female", count: 105, percentage: 51.2, color: "bg-pink-500" }
-          ]
-        });
-
-        setAgeData({
-          totalSubjects: datasetData.participant_count || 205,
-          averageAge: 68.3,
-          categories: [
-            { name: "0-10", count: 20, percentage: 9.8, color: "bg-blue-500" },
-            { name: "11-20", count: 40, percentage: 19.5, color: "bg-green-500" },
-            { name: "21-30", count: 50, percentage: 24.4, color: "bg-yellow-500" },
-            { name: "31-40", count: 45, percentage: 22.0, color: "bg-red-500" },
-            { name: "41+", count: 50, percentage: 24.4, color: "bg-purple-500" }
-          ],
-          ageStats: { mean: 68.3, min: 5, max: 85 }
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching dataset:", error);
-      // Fallback to default
-      setDataset({
-        name: "MEG Study on Cognitive Tasks",
-        description: "This dataset includes MEG recordings from participants performing various cognitive tasks.",
-        participants: 100,
-        tasks: 5,
-        modality: "MEG"
-      });
-      setDiagnosisData({
-        totalSubjects: 205,
-        averageAge: 68.3,
-        categories: [
-          { name: "Autism", count: 85, percentage: 41.5, color: "bg-blue-500" },
-          { name: "Healthy", count: 70, percentage: 34.1, color: "bg-green-500" },
-          { name: "ADHD", count: 50, percentage: 24.4, color: "bg-red-500" }
-        ]
-      });
-    } finally {
-      setLoading(false);
+  // Sample dataset information
+  const datasetInfo = {
+    "midnight-scan-club": {
+      name: "Midnight Scan Club",
+      description: "This dataset includes fMRI recordings from participants performing various cognitive tasks.",
+      participants: 10,
+      tasks: 8,
+      modality: "fMRI"
+    },
+    "human-connectome": {
+      name: "Human Connectome Project",
+      description: "This dataset includes comprehensive brain mapping data from healthy adults.",
+      participants: 1200,
+      tasks: 12,
+      modality: "fMRI, dMRI"
+    },
+    "adni": {
+      name: "ADNI Study",
+      description: "This dataset includes longitudinal MRI and cognitive data for Alzheimer's research.",
+      participants: 800,
+      tasks: 15,
+      modality: "MRI, PET"
+    },
+    "abide": {
+      name: "ABIDE Dataset",
+      description: "This dataset includes MRI recordings from participants with autism spectrum disorder.",
+      participants: 539,
+      tasks: 6,
+      modality: "MRI"
     }
   };
 
-  // Helper function to get current data based on active tab
-  const getCurrentData = () => {
-    switch (activeTab) {
-      case "sex":
-        return sexData;
-      case "age":
-        return ageData;
-      default:
-        return diagnosisData;
-    }
+  const dataset = datasetInfo[id] || {
+    name: "MEG Study on Cognitive Tasks",
+    description: "This dataset includes MEG recordings from participants performing various cognitive tasks.",
+    participants: 100,
+    tasks: 5,
+    modality: "MEG"
   };
 
-  // Helper function to get current title based on active tab
-  const getCurrentTitle = () => {
-    switch (activeTab) {
-      case "sex":
-        return "Sex Distribution";
-      case "age":
-        return "Age Distribution";
-      default:
-        return "Diagnosis Distribution";
-    }
+  // Sample data for visualizations
+  const diagnosisData = {
+    totalSubjects: 205,
+    averageAge: 68.3,
+    categories: [
+      { name: "Autism", count: 85, percentage: 41.5, color: "bg-blue-500" },
+      { name: "Healthy", count: 70, percentage: 34.1, color: "bg-green-500" },
+      { name: "ADHD", count: 50, percentage: 24.4, color: "bg-red-500" }
+    ]
   };
-
-  const currentData = getCurrentData();
-
-  // Check if visualization is available
-  const isVisualizationAvailable = dataset && currentData && currentData.categories && currentData.categories.length > 0;
-
-  if (loading || !dataset || !currentData) {
-    return (
-      <div className="flex h-full min-h-screen items-center justify-center bg-eerie-black">
-        <div className="text-white text-xl">Loading visualization...</div>
-      </div>
-    );
-  }
-
-  // Show empty state with back button if no visualization data
-  if (!isVisualizationAvailable) {
-    return (
-      <div className="flex h-full min-h-screen items-center justify-center bg-eerie-black">
-        <div className="text-center">
-          <div className="text-white text-xl mb-4">No visualization data available for this dataset</div>
-          <button
-            onClick={() => navigate('/datasets')}
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary-blue text-white text-sm font-medium leading-normal hover:bg-secondary-blue transition-colors mx-auto"
-          >
-            <span className="truncate">Back to Datasets</span>
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex h-full min-h-screen">
@@ -294,11 +157,11 @@ const DataVisualization = () => {
             <div className="bg-dark-border p-6 rounded-xl shadow-md">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-xl font-semibold text-white">{getCurrentTitle()}</h3>
+                  <h3 className="text-xl font-semibold text-white">Diagnosis Distribution</h3>
                   <p className="text-sm text-[#9dabb9]">
                     {chartType === "3d"
-                      ? `Interactive 3D visualization with ${currentData.categories.length} categories`
-                      : `Interactive donut chart showing ${currentData.categories.length} categories`
+                      ? `Interactive 3D visualization with ${diagnosisData.categories.length} categories`
+                      : `Interactive donut chart showing ${diagnosisData.categories.length} categories`
                     }
                   </p>
                 </div>
@@ -333,32 +196,19 @@ const DataVisualization = () => {
                 </div>
               </div>
 
-              {/* Info banner for single-category datasets */}
-              {currentData.categories.length === 1 && activeTab === "diagnosis" && currentData.categories[0].name === "Healthy" && (
-                <div className="mb-4 bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 flex items-start space-x-2">
-                  <svg className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <div>
-                    <p className="text-sm text-blue-300 font-medium">Healthy Control Study</p>
-                    <p className="text-xs text-blue-400/80 mt-1">This dataset contains only healthy participants. Try viewing <span className="font-medium">Sex Distribution</span> or <span className="font-medium">Age Distribution</span> for more insights.</p>
-                  </div>
-                </div>
-              )}
-
               {/* Chart Visualization */}
               <div className="relative h-[450px] bg-eerie-black rounded-lg overflow-hidden">
                 {chartType === "3d" ? (
                   <BarChart3D
-                    data={currentData.categories}
-                    totalSubjects={currentData.totalSubjects}
+                    data={diagnosisData.categories}
+                    totalSubjects={diagnosisData.totalSubjects}
                     activeCategory={selectedCategory}
                     onBarClick={(categoryName) => setSelectedCategory(categoryName)}
                   />
                 ) : (
                   <DonutChart
-                    data={currentData.categories}
-                    totalSubjects={currentData.totalSubjects}
+                    data={diagnosisData.categories}
+                    totalSubjects={diagnosisData.totalSubjects}
                     activeCategory={selectedCategory}
                     onSegmentClick={(categoryName) => setSelectedCategory(categoryName)}
                   />
@@ -382,11 +232,11 @@ const DataVisualization = () => {
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="bg-primary-blue/10 p-4 rounded-lg">
                   <p className="text-sm text-[#9dabb9]">Total Subjects</p>
-                  <p className="text-3xl font-bold text-primary-blue">{currentData.totalSubjects}</p>
+                  <p className="text-3xl font-bold text-primary-blue">{diagnosisData.totalSubjects}</p>
                 </div>
                 <div className="bg-blue-500/10 p-4 rounded-lg">
                   <p className="text-sm text-[#9dabb9]">Average Age</p>
-                  <p className="text-3xl font-bold text-blue-500">{currentData.averageAge.toFixed(1)}</p>
+                  <p className="text-3xl font-bold text-blue-500">{diagnosisData.averageAge}</p>
                 </div>
                 <div className="bg-green-500/10 p-4 rounded-lg">
                   <p className="text-sm text-[#9dabb9] flex items-center justify-center">
@@ -395,8 +245,8 @@ const DataVisualization = () => {
                     </svg>
                     Highest
                   </p>
-                  <p className="text-xl font-bold text-green-500">{currentData.categories[0].count}</p>
-                  <p className="text-xs text-[#9dabb9]">{currentData.categories[0].name}</p>
+                  <p className="text-xl font-bold text-green-500">{diagnosisData.categories[0].count}</p>
+                  <p className="text-xs text-[#9dabb9]">{diagnosisData.categories[0].name}</p>
                 </div>
                 <div className="bg-red-500/10 p-4 rounded-lg">
                   <p className="text-sm text-[#9dabb9] flex items-center justify-center">
@@ -405,8 +255,8 @@ const DataVisualization = () => {
                     </svg>
                     Lowest
                   </p>
-                  <p className="text-xl font-bold text-red-500">{currentData.categories[currentData.categories.length - 1].count}</p>
-                  <p className="text-xs text-[#9dabb9]">{currentData.categories[currentData.categories.length - 1].name}</p>
+                  <p className="text-xl font-bold text-red-500">{diagnosisData.categories[2].count}</p>
+                  <p className="text-xs text-[#9dabb9]">{diagnosisData.categories[2].name}</p>
                 </div>
               </div>
             </div>
@@ -420,7 +270,7 @@ const DataVisualization = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                   <div className="text-white">
-                    <span className="font-medium">Total subjects: {currentData.totalSubjects}</span>
+                    <span className="font-medium">Total subjects: {diagnosisData.totalSubjects}</span>
                   </div>
                 </li>
                 <li className="flex items-start space-x-3">
@@ -428,7 +278,7 @@ const DataVisualization = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                   </svg>
                   <div className="text-white">
-                    <span className="font-medium">Most common {activeTab === "diagnosis" ? "diagnosis" : activeTab === "sex" ? "sex" : "age group"}:</span> {currentData.categories[0].name} ({currentData.categories[0].percentage.toFixed(1)}%)
+                    <span className="font-medium">Most common diagnosis:</span> {diagnosisData.categories[0].name} ({diagnosisData.categories[0].percentage}%)
                   </div>
                 </li>
                 <li className="flex items-start space-x-3">
@@ -436,7 +286,7 @@ const DataVisualization = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                   </svg>
                   <div className="text-white">
-                    <span className="font-medium">Least common {activeTab === "diagnosis" ? "diagnosis" : activeTab === "sex" ? "sex" : "age group"}:</span> {currentData.categories[currentData.categories.length - 1].name} ({currentData.categories[currentData.categories.length - 1].percentage.toFixed(1)}%)
+                    <span className="font-medium">Least common diagnosis:</span> {diagnosisData.categories[2].name} ({diagnosisData.categories[2].percentage}%)
                   </div>
                 </li>
                 <li className="flex items-start space-x-3">
@@ -444,7 +294,7 @@ const DataVisualization = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
                   </svg>
                   <div className="text-white">
-                    <span className="font-medium">Average Age:</span> {currentData.averageAge.toFixed(1)} years
+                    <span className="font-medium">Clinical to healthy ratio:</span> 1.93:1
                   </div>
                 </li>
               </ul>
@@ -454,11 +304,11 @@ const DataVisualization = () => {
             <div className="bg-dark-border p-6 rounded-xl shadow-md">
               <h3 className="text-lg font-semibold mb-4 text-white">Distribution</h3>
               <div className="space-y-3">
-                {currentData.categories.map((category, idx) => (
+                {diagnosisData.categories.map((category, idx) => (
                   <div key={idx} className="text-sm">
                     <div className="flex justify-between mb-1 text-white">
                       <span>{idx + 1}. {category.name}</span>
-                      <span className="font-medium">{category.percentage.toFixed(1)}%</span>
+                      <span className="font-medium">{category.percentage}%</span>
                     </div>
                     <div className="w-full bg-[#3b4754] rounded-full h-2">
                       <div
