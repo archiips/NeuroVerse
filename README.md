@@ -94,8 +94,8 @@ Frontend/
 
 ## Dataset Summary
 
-- Total Datasets: 19 (verified)
-- Total Participants: ~2,500
+- Total Datasets: 23 (verified)
+- Total Participants: ~2,700
 - Largest Studies: ds003097 (928), ds002785 (216), ds004199 (170)
 
 ---
