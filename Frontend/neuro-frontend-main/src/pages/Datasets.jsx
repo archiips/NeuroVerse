@@ -54,65 +54,26 @@ const DataVisualization = () => {
   const fetchDatasetAndStats = async () => {
     try {
       setLoading(true);
-
-      const datasetsResponse = await datasetAPI.getAllDatasets();
-      let datasetRecord = datasetsResponse.data.find(ds => ds.openneuro_id === id);
-      let resolvedOpenNeuroId = datasetRecord?.openneuro_id || id;
-
-      if (!datasetRecord) {
-        const numericId = Number(id);
-        if (!Number.isNaN(numericId)) {
-          try {
-            const datasetByIdResponse = await datasetAPI.getDatasetById(numericId);
-            datasetRecord = datasetByIdResponse.data;
-            resolvedOpenNeuroId = datasetRecord?.openneuro_id || resolvedOpenNeuroId;
-          } catch {
-            datasetRecord = null;
-          }
-        }
-      }
-
-      if (!datasetRecord || !resolvedOpenNeuroId) {
-        throw new Error(`Dataset ${id} not found`);
-      }
+      const datasetResponse = await datasetAPI.getDatasetById(id);
+      const datasetData = datasetResponse.data;
 
       setDataset({
-        name: datasetRecord.name || resolvedOpenNeuroId,
-        description: datasetRecord.description || "This dataset includes recordings from participants performing various cognitive tasks.",
-        participants: datasetRecord.participant_count || 0,
-        tasks: datasetRecord.tasks || 5,
-        modality: datasetRecord.modality || "fMRI",
-        dataQuality: datasetRecord.dataQuality || datasetRecord.data_quality || "unknown",
-        availableStats: datasetRecord.availableStats || datasetRecord.available_stats || []
+        name: datasetData.name || datasetData.openneuro_id,
+        description: datasetData.description || "This dataset includes recordings from participants performing various cognitive tasks.",
+        participants: datasetData.participant_count || 0,
+        tasks: 5,
+        modality: "fMRI",
+        dataQuality: datasetData.dataQuality || "unknown",
+        availableStats: datasetData.availableStats || []
       });
 
       try {
-        const statsResponse = await datasetAPI.getSummaryStats(resolvedOpenNeuroId);
-        
-        // Try different data access patterns
-        let stats = statsResponse.data?.data || statsResponse.data;
-        
-        // Remove all these console.log statements
-        // console.log('📊 Full axios response:', statsResponse);
-        // console.log('📊 statsResponse.data:', statsResponse.data);
-        // console.log('📊 Extracted stats:', stats);
-        // console.log('📊 stats.diagnosis:', stats?.diagnosis);
-        // console.log('📊 stats.sex:', stats?.sex);
-        // console.log('📊 stats.age_distribution:', stats?.age_distribution);
-        // console.log('📊 stats.available_stats:', stats?.available_stats);
-        
-        // If stats is wrapped in success/data, unwrap it
-        if (stats?.success && stats?.data) {
-          stats = stats.data;
-        }
-        
-        if (!stats || typeof stats !== "object") {
-          throw new Error("Invalid stats response");
-        }
+        const statsResponse = await datasetAPI.getSummaryStats(id);
+        const stats = statsResponse.data;
         
         // Store raw stats with quality indicators
         setSummaryStats({
-          total_participants: stats.total_participants || datasetRecord.participant_count || 0,
+          total_participants: stats.total_participants || datasetData.participant_count || 0,
           confidence: stats.confidence || "unavailable",
           available_stats: stats.available_stats || [],
           age_stats: stats.age_stats,
@@ -193,7 +154,7 @@ const DataVisualization = () => {
         console.error("Error fetching stats:", error);
         // Set all data to null - no mock fallbacks
         setSummaryStats({
-          total_participants: datasetRecord.participant_count || 0,
+          total_participants: datasetData.participant_count || 0,
           confidence: "unavailable",
           available_stats: []
         });
@@ -247,11 +208,7 @@ const DataVisualization = () => {
   if (loading) {
     return (
       <div className="flex h-full min-h-screen items-center justify-center bg-eerie-black">
-        <div className="text-center">
-          {/* Simple spinner */}
-          <div className="w-16 h-16 mx-auto mb-4 border-4 border-primary-blue/20 border-t-primary-blue rounded-full animate-spin"></div>
-          <p className="text-white text-lg">Loading...</p>
-        </div>
+        <div className="text-white text-xl">Loading visualization...</div>
       </div>
     );
   }
@@ -292,9 +249,9 @@ const DataVisualization = () => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row h-full min-h-screen">
+    <div className="flex h-full min-h-screen">
       {/* Left Sidebar - Dataset Summary */}
-      <aside className="w-full lg:w-80 bg-dark-border p-6 flex flex-col justify-between shadow-lg">
+      <aside className="w-80 bg-dark-border p-6 flex flex-col justify-between shadow-lg">
         <div>
           <div className="flex items-center space-x-3 mb-10">
             <svg className="w-10 h-10 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -308,11 +265,11 @@ const DataVisualization = () => {
           <div className="space-y-5">
             <div>
               <p className="text-sm text-[#9dabb9]">Dataset Name</p>
-              <p className="font-medium text-white break-words">{dataset.name}</p>
+              <p className="font-medium text-white">{dataset.name}</p>
             </div>
             <div>
               <p className="text-sm text-[#9dabb9]">Description</p>
-              <p className="text-sm text-white break-words">{dataset.description}</p>
+              <p className="text-sm text-white">{dataset.description}</p>
             </div>
             <div className="border-t border-[#3b4754]"></div>
             <div className="flex justify-between items-center">
@@ -332,15 +289,15 @@ const DataVisualization = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto bg-eerie-black">
-        <div className="flex flex-col sm:flex-row flex-wrap justify-between gap-3 mb-8">
-          <div className="flex min-w-full sm:min-w-72 flex-col gap-3">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">Visualization Dashboard</h1>
-            <p className="text-[#9dabb9] text-base md:text-lg">Explore the metadata of the selected dataset through interactive charts.</p>
+      <main className="flex-1 p-8 overflow-y-auto bg-eerie-black">
+        <div className="flex flex-wrap justify-between gap-3 mb-8">
+          <div className="flex min-w-72 flex-col gap-3">
+            <h1 className="text-4xl font-bold mb-2 text-white">Visualization Dashboard</h1>
+            <p className="text-[#9dabb9] text-lg">Explore the metadata of the selected dataset through interactive charts.</p>
           </div>
           <button
             onClick={() => navigate('/datasets')}
-            className="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary-blue text-white text-sm font-medium leading-normal hover:bg-secondary-blue transition-colors"
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary-blue text-white text-sm font-medium leading-normal hover:bg-secondary-blue transition-colors"
           >
             <span className="truncate">Back to Datasets</span>
           </button>
@@ -364,7 +321,7 @@ const DataVisualization = () => {
         )}
 
         {/* Tabs */}
-        <div className="flex overflow-x-auto space-x-2 border-b border-[#3b4754] mb-6">
+        <div className="flex space-x-2 border-b border-[#3b4754] mb-6">
           <button
             onClick={() => setActiveTab("diagnosis")}
             disabled={!diagnosisData}
@@ -410,14 +367,14 @@ const DataVisualization = () => {
         </div>
 
         {/* Content Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          {/* Main Chart Area */}
-          <div className="xl:col-span-2">
-            <div className="bg-dark-border p-4 md:p-6 rounded-xl shadow-md">
+        <div className="grid grid-cols-3 gap-8">
+          {/* Main Chart Area (2 columns) */}
+          <div className="col-span-2">
+            <div className="bg-dark-border p-6 rounded-xl shadow-md">
               {currentData ? (
                 <>
-                  <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
-                    <div className="flex-1">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
                       <h3 className="text-xl font-semibold text-white">{getCurrentTitle()}</h3>
                       <p className="text-sm text-[#9dabb9]">
                         {chartType === "3d"
@@ -426,10 +383,10 @@ const DataVisualization = () => {
                         }
                       </p>
                     </div>
-                    <div className="flex space-x-2 w-full sm:w-auto">
+                    <div className="flex space-x-2">
                       <button
                         onClick={() => setChartType("3d")}
-                        className={`flex-1 sm:flex-none px-3 md:px-4 py-2 rounded-lg flex items-center justify-center space-x-2 text-xs md:text-sm transition-colors ${
+                        className={`px-4 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors ${
                           chartType === "3d"
                             ? "bg-primary-blue text-white"
                             : "bg-[#3b4754] text-white hover:bg-[#4b5764]"
@@ -438,11 +395,11 @@ const DataVisualization = () => {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5z" />
                         </svg>
-                        <span className="hidden sm:inline">3D Chart</span>
+                        <span>3D Bar Chart</span>
                       </button>
                       <button
                         onClick={() => setChartType("donut")}
-                        className={`flex-1 sm:flex-none px-3 md:px-4 py-2 rounded-lg flex items-center justify-center space-x-2 text-xs md:text-sm transition-colors ${
+                        className={`px-4 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors ${
                           chartType === "donut"
                             ? "bg-primary-blue text-white"
                             : "bg-[#3b4754] text-white hover:bg-[#4b5764]"
@@ -450,8 +407,9 @@ const DataVisualization = () => {
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                         </svg>
-                        <span className="hidden sm:inline">Donut</span>
+                        <span>Donut Chart</span>
                       </button>
                     </div>
                   </div>
@@ -487,8 +445,8 @@ const DataVisualization = () => {
                     </div>
                   )}
 
-                  {/* Chart Visualization - Responsive height */}
-                  <div className="relative h-[300px] sm:h-[400px] md:h-[450px] bg-eerie-black rounded-lg overflow-hidden">
+                  {/* Chart Visualization */}
+                  <div className="relative h-[450px] bg-eerie-black rounded-lg overflow-hidden">
                     {chartType === "3d" ? (
                       <BarChart3D
                         data={currentData.categories}
@@ -522,8 +480,8 @@ const DataVisualization = () => {
             </div>
           </div>
 
-          {/* Right Sidebar - Insights */}
-          <div className="xl:col-span-1 space-y-6">
+          {/* Right Sidebar - Insights (1 column) */}
+          <div className="col-span-1 space-y-6">
             {currentData ? (
               <>
                 {/* Data Insights Card */}

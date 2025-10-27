@@ -23,7 +23,10 @@ const HomePage = () => {
                 >
                   Explore Sample Data
                 </Link>
+                {/* Remove or comment out the upload button section */}
+                {/* 
                 <a className="inline-block px-8 py-3 text-base font-bold rounded-lg bg-subtle-light/20 hover:bg-subtle-light/30 text-foreground-light dark:text-foreground-dark transition-transform transform hover:scale-105" href="#">Upload Your Data</a>
+                */}
               </div>
             </div>
             <BrainCanvas />

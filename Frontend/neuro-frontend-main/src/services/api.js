@@ -80,9 +80,9 @@ export const datasetAPI = {
   getAgeDistribution: (id) => api.get(`/datasets/${id}/stats/age-distribution`),
 
   /**
-   * Get complete summary statistics for a dataset
+   * Get complete summary statistics for a dataset (OpenNeuro parser)
    */
-  getSummaryStats: (id) => api.get(`/datasets/${id}/stats/summary`),
+  getSummaryStats: (openneuroId) => api.get(`/datasets/${openneuroId}/summary-stats`),
 
   /**
    * Get all participants for a dataset

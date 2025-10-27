@@ -18,6 +18,7 @@ const App = () => {
           <Route path="/datasets" element={<DatasetsPage />} />
           <Route path="/datasets/:id" element={<DatasetDetail />} />
           <Route path="/datasets/:id/visualize" element={<DataVisualization />} />
+          <Route path="/visualization/:id" element={<DataVisualization />} />
         </Routes>
       </main>
       <Footer />
