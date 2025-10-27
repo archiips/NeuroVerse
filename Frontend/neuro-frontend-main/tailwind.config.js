@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary-blue': '#60a5fa',     // Softer light blue
-        'secondary-blue': '#3b82f6',   // Medium blue  
-        'light-blue': '#93c5fd',       // Light blue
+        'primary-blue': '#93c5fd',     // Light blue
+        'secondary-blue': '#60a5fa',   // Medium-light blue  
+        'light-blue': '#bfdbfe',       // Very light blue
         'eerie-black': '#101922',
         'dark-border': '#1e2933',
         'background-light': '#f7f8fa',

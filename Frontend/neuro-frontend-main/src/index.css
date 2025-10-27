@@ -29,10 +29,10 @@ body {
 }
 
 :root {
-  /* Primary colors - Softer light blue palette */
-  --primary-blue: #60a5fa;        /* Softer blue (was #2094f3) */
-  --secondary-blue: #3b82f6;      /* Medium blue (was #1169e0) */
-  --light-blue: #93c5fd;          /* Light blue */
+  /* Primary colors - Even lighter blue palette */
+  --primary-blue: #93c5fd;        /* Light blue */
+  --secondary-blue: #60a5fa;      /* Medium-light blue */
+  --light-blue: #bfdbfe;          /* Very light blue */
   
   /* ...existing code... */
 }

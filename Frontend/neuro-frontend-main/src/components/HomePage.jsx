@@ -79,18 +79,12 @@ const HomePage = () => {
         </div>
       </section>
       {/* Call to Action */}
-      <div className="flex gap-4 items-center">
+      <div className="flex justify-center">
         <button
           onClick={() => navigate('/datasets')}
-          className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#60a5fa] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#3b82f6] transition-colors"
+          className="flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-[#93c5fd] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#60a5fa] transition-colors"
         >
           <span className="truncate">Explore Datasets</span>
-        </button>
-        <button
-          onClick={() => navigate('/about')}
-          className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#1e2933] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#2a3845] transition-colors"
-        >
-          <span className="truncate">Learn More</span>
         </button>
       </div>
     </>
