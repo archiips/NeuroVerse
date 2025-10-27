@@ -6,6 +6,7 @@ import DatasetsPage from "./components/DatasetsPage";
 import DatasetDetail from "./components/DatasetDetail";
 import DataVisualization from "./components/DataVisualization";
 import DemoExperience from "./components/DemoExperience";
+import About from "./components/About";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/datasets/:id" element={<DatasetDetail />} />
           <Route path="/datasets/:id/visualize" element={<DataVisualization />} />
           <Route path="/visualization/:id" element={<DataVisualization />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </main>
       <Footer />

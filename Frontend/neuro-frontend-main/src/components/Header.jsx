@@ -12,7 +12,7 @@ const Header = () => {
             NeuroVerse
           </h1>
         </div>
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-6 md:flex absolute left-1/2 transform -translate-x-1/2">
           <Link
             className={`text-sm font-medium ${location.pathname === '/' ? 'font-bold text-secondary-blue dark:text-light-blue' : 'text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary'}`}
             to="/"
@@ -25,13 +25,13 @@ const Header = () => {
           >
             Datasets & Visualizations
           </Link>
-          <a className="text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary" href="#">About me</a>
+          <Link
+            className={`text-sm font-medium ${location.pathname === '/about' ? 'font-bold text-secondary-blue dark:text-light-blue' : 'text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary'}`}
+            to="/about"
+          >
+            About
+          </Link>
         </nav>
-        <div className="flex items-center gap-4">
-          <button className="h-9 w-9 overflow-hidden rounded-full border-2 border-light-blue/50">
-            <img alt="User avatar" className="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-uzuTM8goJfBrrdNDybirI2EVN86zf3KmZwCJou_WArwq2uH-NUgyaqGdD1KnnixtX55nu24syk3ojbYUhoUWeEfos6oJ1n0qNGkp7MnWBMc-HxjRodfGeZNGcNP8O1tPxVNkvgx2NNMe2vtmKYUYCXTYJl21SvqPmUAJJu27XVURVJ50J40uzgUOm4hMpdh7-PP4I1gnhp4oVety7eu5F5R-pqGVZ9UkSpwW56TR4lfN3KOZV6hUaMndM444HJXuowBpCW_HvsU"/>
-          </button>
-        </div>
       </div>
     </header>
   );
