@@ -1,14 +1,56 @@
-# NeuroVerse Backend API
+# NeuroVerse Backend
 
-FastAPI backend for the NeuroVerse neuroscience data visualization platform. This backend integrates with OpenNeuro's GraphQL API to fetch and visualize dataset metadata.
+FastAPI backend for the NeuroVerse neuroscience data exploration platform.
 
 ## Features
 
-- 🔄 **OpenNeuro Integration**: Sync datasets directly from OpenNeuro using GraphQL API
-- 📊 **Statistical Aggregations**: Fast local queries for diagnosis, sex, and age distributions
-- 💾 **Local Caching**: SQLite database for quick access to synced datasets
-- 📝 **Auto-generated Docs**: Interactive API documentation with Swagger UI
-- 🚀 **Async Support**: Asynchronous operations for improved performance
+- **NDA Data Dictionary Integration**: Fetches data structures from NDA API
+- **RESTful API**: Clean, documented endpoints for frontend consumption
+- **SQLite Database**: Efficient local storage for 5,770+ datasets
+- **Smart Demographics**: Generates realistic participant demographics per dataset
+- **Auto-generated Descriptions**: Context-aware descriptions based on assessment type
+
+## Tech Stack
+
+- Python 3.9+
+- FastAPI 0.115.0
+- SQLAlchemy 2.0 (ORM)
+- Pandas 2.2 (Data processing)
+- Requests (HTTP client for NDA API)
+
+## Installation
+
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run database migration
+python migrations/migrate_to_nda.py
+
+# Start server
+./start.sh
+```
+
+## API Documentation
+
+Once running, visit:
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+## Environment Variables
+
+Create a `.env` file:
+
+```env
+DATABASE_URL=sqlite:///./neuroverse.db
+NDA_API_BASE_URL=https://nda.nih.gov/api/datadictionary/v2
+LOG_LEVEL=INFO
+```
 
 ## Project Structure
 
@@ -39,32 +81,6 @@ Backend/
 └── README.md
 ```
 
-## Installation
-
-### Prerequisites
-
-- Python 3.9+
-- pip or poetry
-
-### Setup
-
-1. **Create virtual environment**:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Configure environment** (optional):
-   ```bash
-   cp .env.example .env
-   # Edit .env if needed
-   ```
-
 ## Running the Application
 
 ### Development Server
@@ -74,6 +90,7 @@ uvicorn app.main:app --reload
 ```
 
 The API will be available at:
+
 - **API**: http://localhost:8000
 - **Interactive Docs**: http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
@@ -91,6 +108,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 **Endpoint**: `POST /api/v1/sync/dataset`
 
 **Request Body**:
+
 ```json
 {
   "openneuro_id": "ds000224",
@@ -99,6 +117,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 **Response**:
+
 ```json
 {
   "status": "success",
@@ -109,6 +128,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 **Example with curl**:
+
 ```bash
 curl -X POST "http://localhost:8000/api/v1/sync/dataset" \
   -H "Content-Type: application/json" \
@@ -120,6 +140,7 @@ curl -X POST "http://localhost:8000/api/v1/sync/dataset" \
 **Endpoint**: `GET /api/v1/datasets`
 
 **Response**:
+
 ```json
 [
   {
@@ -138,6 +159,7 @@ curl -X POST "http://localhost:8000/api/v1/sync/dataset" \
 **Endpoint**: `GET /api/v1/datasets/{dataset_id}/stats/summary`
 
 **Response**:
+
 ```json
 {
   "total_subjects": 10,
@@ -160,36 +182,38 @@ curl -X POST "http://localhost:8000/api/v1/sync/dataset" \
 ## Database Schema
 
 ### Dataset Table
+
 Stores metadata about OpenNeuro datasets.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | Integer | Primary key |
-| openneuro_id | String(50) | OpenNeuro dataset ID (e.g., "ds000224") |
-| name | String(500) | Dataset name |
-| snapshot_tag | String(50) | Version tag (e.g., "1.0.1") |
-| is_synced | Boolean | Sync status |
-| participant_count | Integer | Number of participants |
+| Column            | Type        | Description                             |
+| ----------------- | ----------- | --------------------------------------- |
+| id                | Integer     | Primary key                             |
+| openneuro_id      | String(50)  | OpenNeuro dataset ID (e.g., "ds000224") |
+| name              | String(500) | Dataset name                            |
+| snapshot_tag      | String(50)  | Version tag (e.g., "1.0.1")             |
+| is_synced         | Boolean     | Sync status                             |
+| participant_count | Integer     | Number of participants                  |
 
 ### Participant Table
+
 Stores individual participant metadata from participants.tsv files.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | Integer | Primary key |
-| dataset_id | Integer | Foreign key to datasets |
+| Column         | Type        | Description                         |
+| -------------- | ----------- | ----------------------------------- |
+| id             | Integer     | Primary key                         |
+| dataset_id     | Integer     | Foreign key to datasets             |
 | participant_id | String(100) | Subject identifier (e.g., "sub-01") |
-| age | Float | Age in years |
-| sex | String(10) | Sex (M/F/Other) |
-| diagnosis | String(200) | Clinical diagnosis |
+| age            | Float       | Age in years                        |
+| sex            | String(10)  | Sex (M/F/Other)                     |
+| diagnosis      | String(200) | Clinical diagnosis                  |
 
 ## Example Datasets to Try
 
-| OpenNeuro ID | Name | Description |
-|--------------|------|-------------|
-| ds000224 | Midnight Scan Club | Highly sampled individuals (recommended for testing) |
-| ds000001 | Single Task fMRI | Classic example dataset |
-| ds000102 | Flanker Task | Simple cognitive task dataset |
+| OpenNeuro ID | Name               | Description                                          |
+| ------------ | ------------------ | ---------------------------------------------------- |
+| ds000224     | Midnight Scan Club | Highly sampled individuals (recommended for testing) |
+| ds000001     | Single Task fMRI   | Classic example dataset                              |
+| ds000102     | Flanker Task       | Simple cognitive task dataset                        |
 
 ## Development
 
@@ -211,6 +235,7 @@ pytest
 ### Database Issues
 
 If you encounter database issues, delete the database file and restart:
+
 ```bash
 rm neuroverse.db
 uvicorn app.main:app --reload

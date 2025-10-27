@@ -18,6 +18,9 @@ const DatasetDetail = () => {
     try {
       const response = await datasetAPI.getDatasetById(id);
       const datasetData = response.data;
+      
+      console.log('📦 Dataset data received:', datasetData);
+      console.log('📝 Description:', datasetData.description);
 
       setDataset({
         title: datasetData.name || datasetData.openneuro_id,
@@ -34,6 +37,7 @@ const DatasetDetail = () => {
         name: "Unknown Dataset",
         openneuro_id: null,
         participant_count: 0,
+        description: "No description available"
       });
     } finally {
       setLoading(false);
@@ -80,25 +84,16 @@ const DatasetDetail = () => {
               {dataset.name}
             </p>
             <p className="text-[#9dabb9] text-sm font-normal leading-normal break-words">
-              {dataset.description}
+              NDA Data Structure
             </p>
+            {/* Dataset Summary Box */}
+            <div className="bg-[#1c2127] border border-[#3b4754] rounded-lg p-4 mt-2">
+              <p className="text-white text-sm font-medium mb-1">Dataset Summary</p>
+              <p className="text-[#9dabb9] text-sm leading-relaxed">
+                {dataset.description}
+              </p>
+            </div>
           </div>
-          {/* Duplicate button commented out - use main button below instead
-          <button
-            onClick={() =>
-              dataset?.openneuro_id &&
-              navigate(`/visualization/${dataset.openneuro_id}`)
-            }
-            disabled={!dataset?.openneuro_id}
-            className={`flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 text-sm font-medium leading-normal transition-colors ${
-              dataset?.openneuro_id
-                ? "bg-primary-blue text-white hover:bg-secondary-blue cursor-pointer"
-                : "bg-[#3b4754] text-[#9dabb9] cursor-not-allowed"
-            }`}
-          >
-            <span className="truncate">View Visualization</span>
-          </button>
-          */}
         </div>
 
         {/* Dataset Info Cards */}

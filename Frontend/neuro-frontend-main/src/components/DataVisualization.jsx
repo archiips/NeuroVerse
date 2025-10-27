@@ -87,23 +87,22 @@ const DataVisualization = () => {
       });
 
       try {
+        console.log('🔍 Fetching stats for:', resolvedOpenNeuroId);
         const statsResponse = await datasetAPI.getSummaryStats(resolvedOpenNeuroId);
+        console.log('📊 Stats response:', statsResponse);
         
         // Try different data access patterns
         let stats = statsResponse.data?.data || statsResponse.data;
-        
-        // Remove all these console.log statements
-        // console.log('📊 Full axios response:', statsResponse);
-        // console.log('📊 statsResponse.data:', statsResponse.data);
-        // console.log('📊 Extracted stats:', stats);
-        // console.log('📊 stats.diagnosis:', stats?.diagnosis);
-        // console.log('📊 stats.sex:', stats?.sex);
-        // console.log('📊 stats.age_distribution:', stats?.age_distribution);
-        // console.log('📊 stats.available_stats:', stats?.available_stats);
+        console.log('📊 Extracted stats:', stats);
+        console.log('📊 Available stats array:', stats?.available_stats);
+        console.log('📊 Diagnosis:', stats?.diagnosis);
+        console.log('📊 Sex:', stats?.sex);
+        console.log('📊 Age distribution:', stats?.age_distribution);
         
         // If stats is wrapped in success/data, unwrap it
         if (stats?.success && stats?.data) {
           stats = stats.data;
+          console.log('📊 Unwrapped stats:', stats);
         }
         
         if (!stats || typeof stats !== "object") {
@@ -277,12 +276,27 @@ const DataVisualization = () => {
   if (!hasAnyVisualizationData) {
     return (
       <div className="flex h-full min-h-screen items-center justify-center bg-eerie-black">
-        <div className="text-center">
-          <div className="text-white text-xl mb-4">No visualization data available for this dataset</div>
-          <p className="text-[#9dabb9] mb-6">This dataset may not contain demographic metadata.</p>
+        <div className="text-center max-w-2xl px-4">
+          <svg className="w-20 h-20 mx-auto mb-6 text-[#9dabb9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <div className="text-white text-2xl font-bold mb-4">No Participant Demographics Available</div>
+          <p className="text-[#9dabb9] mb-4 leading-relaxed">
+            This <span className="text-white font-medium">OpenNeuro dataset</span> does not have a participants.tsv file with demographic information.
+          </p>
+          <div className="bg-[#1c2127] border border-[#3b4754] rounded-lg p-4 mb-6 text-left">
+            <p className="text-sm text-[#9dabb9] mb-3">
+              <span className="text-white font-medium">Why is this happening?</span>
+            </p>
+            <ul className="text-sm text-[#9dabb9] space-y-2">
+              <li>• This dataset may only contain imaging files without participant metadata</li>
+              <li>• Some older datasets were uploaded without demographic information</li>
+              <li>• Try viewing other datasets like <span className="text-white font-medium">ds000030</span> (UCLA Consortium) which has complete demographics</li>
+            </ul>
+          </div>
           <button
-            onClick={() => navigate('/datasets')}
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary-blue text-white text-sm font-medium leading-normal hover:bg-secondary-blue transition-colors mx-auto"
+            onClick={() => navigate('/datasets', { replace: true })}
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary-blue text-white text-sm font-medium leading-normal hover:bg-secondary-blue transition-colors mx-auto"
           >
             <span className="truncate">Back to Datasets</span>
           </button>
@@ -294,7 +308,7 @@ const DataVisualization = () => {
   return (
     <div className="flex flex-col lg:flex-row h-full min-h-screen">
       {/* Left Sidebar - Dataset Summary */}
-      <aside className="w-full lg:w-80 bg-dark-border p-6 flex flex-col justify-between shadow-lg">
+      <aside className="w-full lg:w-80 bg-dark-border p-6 flex flex-col shadow-lg">
         <div>
           <div className="flex items-center space-x-3 mb-10">
             <svg className="w-10 h-10 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -303,29 +317,41 @@ const DataVisualization = () => {
             <h1 className="text-2xl font-bold text-white">NeuroVerse</h1>
           </div>
 
-          <h2 className="text-lg font-semibold mb-6 text-white">Dataset Summary</h2>
+          <h2 className="text-lg font-semibold mb-3 text-white">About This Dataset</h2>
 
-          <div className="space-y-5">
+          {/* Dataset Name & Description */}
+          <div className="space-y-4 mb-6">
             <div>
-              <p className="text-sm text-[#9dabb9]">Dataset Name</p>
+              <p className="text-sm text-[#9dabb9] mb-1">Dataset Name</p>
               <p className="font-medium text-white break-words">{dataset.name}</p>
             </div>
+            
             <div>
-              <p className="text-sm text-[#9dabb9]">Description</p>
-              <p className="text-sm text-white break-words">{dataset.description}</p>
+              <p className="text-sm text-[#9dabb9] mb-1">Description</p>
+              <p className="text-sm text-white leading-relaxed break-words">
+                {dataset.description}
+              </p>
             </div>
-            <div className="border-t border-[#3b4754]"></div>
+          </div>
+
+          <div className="border-t border-[#3b4754] pt-4 space-y-4">
+            <h3 className="text-md font-semibold text-white">Quick Stats</h3>
+            
             <div className="flex justify-between items-center">
-              <p className="text-sm text-[#9dabb9]">Number of Participants</p>
+              <p className="text-sm text-[#9dabb9]">Participants</p>
               <p className="font-semibold text-lg text-white">{dataset.participants}</p>
             </div>
+            
             <div className="flex justify-between items-center">
-              <p className="text-sm text-[#9dabb9]">Number of Tasks</p>
-              <p className="font-semibold text-lg text-white">{dataset.tasks}</p>
+              <p className="text-sm text-[#9dabb9]">Modality</p>
+              <p className="font-medium text-sm bg-primary-blue/10 text-primary-blue px-2 py-1 rounded-full">
+                {dataset.modality}
+              </p>
             </div>
+            
             <div className="flex justify-between items-center">
-              <p className="text-sm text-[#9dabb9]">Modalities</p>
-              <p className="font-medium text-sm bg-primary-blue/10 text-primary-blue px-2 py-1 rounded-full">{dataset.modality}</p>
+              <p className="text-sm text-[#9dabb9]">Dataset ID</p>
+              <p className="font-mono text-xs text-white break-all">{id}</p>
             </div>
           </div>
         </div>
@@ -336,10 +362,10 @@ const DataVisualization = () => {
         <div className="flex flex-col sm:flex-row flex-wrap justify-between gap-3 mb-8">
           <div className="flex min-w-full sm:min-w-72 flex-col gap-3">
             <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">Visualization Dashboard</h1>
-            <p className="text-[#9dabb9] text-base md:text-lg">Explore the metadata of the selected dataset through interactive charts.</p>
+            <p className="text-[#9dabb9] text-base md:text-lg">Explore real participant demographics through interactive charts.</p>
           </div>
           <button
-            onClick={() => navigate('/datasets')}
+            onClick={() => navigate('/datasets', { replace: true })}
             className="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary-blue text-white text-sm font-medium leading-normal hover:bg-secondary-blue transition-colors"
           >
             <span className="truncate">Back to Datasets</span>
@@ -544,24 +570,14 @@ const DataVisualization = () => {
                       <p className="text-3xl font-bold text-blue-500">{currentData.averageAge.toFixed(1)}</p>
                     </div>
                     <div className="bg-green-500/10 p-4 rounded-lg">
-                      <p className="text-sm text-[#9dabb9] flex items-center justify-center">
-                        <svg className="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        Highest
-                      </p>
+                      <p className="text-sm text-[#9dabb9]">Most Common</p>
                       <p className="text-xl font-bold text-green-500">{currentData.categories[0].count}</p>
-                      <p className="text-xs text-[#9dabb9]">{currentData.categories[0].name}</p>
+                      <p className="text-xs text-[#9dabb9] truncate">{currentData.categories[0].name}</p>
                     </div>
                     <div className="bg-red-500/10 p-4 rounded-lg">
-                      <p className="text-sm text-[#9dabb9] flex items-center justify-center">
-                        <svg className="w-4 h-4 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                        Lowest
-                      </p>
+                      <p className="text-sm text-[#9dabb9]">Least Common</p>
                       <p className="text-xl font-bold text-red-500">{currentData.categories[currentData.categories.length - 1].count}</p>
-                      <p className="text-xs text-[#9dabb9]">{currentData.categories[currentData.categories.length - 1].name}</p>
+                      <p className="text-xs text-[#9dabb9] truncate">{currentData.categories[currentData.categories.length - 1].name}</p>
                     </div>
                   </div>
                   

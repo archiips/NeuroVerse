@@ -3,12 +3,17 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Dict
 import asyncio
+import logging
 
-from app.database.connection import get_db
+from app.database import get_db  # Changed from app.database.connection
+from app.models.dataset import Dataset
 from app.services.data_sync_service import DataSyncService
+from app.services.nda_service import nda_service
 from app.services.scheduler_service import get_scheduler_status, trigger_sync_now
 from app.schemas.dataset import DatasetSyncRequest, DatasetSyncResponse
 from app.data.curated_datasets import CURATED_DATASETS
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/api/v1/sync",

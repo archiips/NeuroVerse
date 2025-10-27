@@ -65,24 +65,9 @@ export const datasetAPI = {
   getDatasetById: (id) => api.get(`/datasets/${id}`),
 
   /**
-   * Get diagnosis statistics for a dataset
-   */
-  getDiagnosisStats: (id) => api.get(`/datasets/${id}/stats/diagnosis`),
-
-  /**
-   * Get sex distribution statistics for a dataset
-   */
-  getSexStats: (id) => api.get(`/datasets/${id}/stats/sex`),
-
-  /**
-   * Get age distribution statistics for a dataset
-   */
-  getAgeDistribution: (id) => api.get(`/datasets/${id}/stats/age-distribution`),
-
-  /**
    * Get complete summary statistics for a dataset (OpenNeuro parser)
    */
-  getSummaryStats: (openneuroId) => api.get(`/datasets/${openneuroId}/summary-stats`),
+  getSummaryStats: (dataset_id) => api.get(`/datasets/${dataset_id}/summary-stats`),
 
   /**
    * Get all participants for a dataset

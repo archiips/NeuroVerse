@@ -2,61 +2,38 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import logging
-from contextlib import asynccontextmanager
 
-from app.config import settings
-from app.database.connection import engine, Base
-from app.routers import datasets, sync
-from app.services.scheduler_service import start_scheduler, stop_scheduler
+# Update imports
+from app.database import engine, Base
+from app.models.dataset import Base as DatasetBase
+from app.routers import datasets
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+# Remove sync router since we don't need OpenNeuro sync anymore
+# from app.routers import sync
+
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
+app = FastAPI(title="NeuroVerse API", version="1.0.0")
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """
-    Application lifespan manager.
-    Starts the scheduler on startup and stops it on shutdown.
-    """
-    # Startup: Start the daily sync scheduler
-    logger.info("🚀 Starting application...")
-    start_scheduler()
-    yield
-    # Shutdown: Stop the scheduler
-    logger.info("🛑 Shutting down application...")
-    stop_scheduler()
-
-
-# Initialize FastAPI app
-app = FastAPI(
-    title=settings.api_title,
-    description=settings.api_description,
-    version=settings.api_version,
-    docs_url="/docs",
-    redoc_url="/redoc",
-    lifespan=lifespan
-)
 
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Create database tables
+Base.metadata.create_all(bind=engine)
+DatasetBase.metadata.create_all(bind=engine)
+
 # Include routers
 app.include_router(datasets.router)
-app.include_router(sync.router)
+# Remove sync router - we don't need it for NDA
+# app.include_router(sync.router)
 
 
 @app.get("/")
@@ -64,7 +41,7 @@ def root():
     """Root endpoint"""
     return {
         "message": "NeuroVerse API is running",
-        "version": settings.api_version,
+        "version": "1.0.0",
         "docs": "/docs"
     }
 
