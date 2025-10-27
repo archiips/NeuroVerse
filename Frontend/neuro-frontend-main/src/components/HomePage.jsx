@@ -79,7 +79,7 @@ const HomePage = () => {
         </div>
       </section>
       {/* Call to Action */}
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-16">
         <button
           onClick={() => navigate('/datasets')}
           className="flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-[#93c5fd] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#60a5fa] transition-colors"
