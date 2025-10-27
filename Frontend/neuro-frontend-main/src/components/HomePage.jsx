@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BrainCanvas from './BrainCanvas';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <section className="relative py-20 sm:py-28 lg:py-32">
@@ -76,18 +78,21 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className="bg-subtle-light/20 dark:bg-subtle-dark/50 py-20 sm:py-24">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Ready to Explore?</h2>
-          <Link
-            to="/datasets"
-            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}
-            className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-base font-bold text-background-dark shadow-lg transition-all hover:bg-white hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark"
-          >
-            Explore Datasets
-          </Link>
-        </div>
-      </section>
+      {/* Call to Action */}
+      <div className="flex gap-4 items-center">
+        <button
+          onClick={() => navigate('/datasets')}
+          className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#60a5fa] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#3b82f6] transition-colors"
+        >
+          <span className="truncate">Explore Datasets</span>
+        </button>
+        <button
+          onClick={() => navigate('/about')}
+          className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#1e2933] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#2a3845] transition-colors"
+        >
+          <span className="truncate">Learn More</span>
+        </button>
+      </div>
     </>
   );
 };
