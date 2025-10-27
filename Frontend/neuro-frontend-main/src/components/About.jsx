@@ -152,8 +152,8 @@ const About = () => {
                 color: "from-green-500 to-emerald-500",
               },
               { 
-                name: "PostgreSQL", 
-                desc: "Reliable database for storing verified dataset metadata.", 
+                name: "SQLite", 
+                desc: "Lightweight database auto-populated with 23 verified datasets on deploy.", 
                 color: "from-blue-600 to-indigo-600",
               }
             ].map((tech, idx) => (

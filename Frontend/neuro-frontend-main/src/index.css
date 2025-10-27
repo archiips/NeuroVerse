@@ -27,3 +27,12 @@ body {
   background-image: linear-gradient(rgba(16, 28, 34, 0.5) 0%, rgba(16, 28, 34, 0.8) 100%),
     url("https://lh3.googleusercontent.com/aida-public/AB6AXuAo21ZAxuUAOWFa6a0pXbtLVYdjMLeJUbfJDqqAIQy0buMzRyZH-WijHw_7BGHtfZn3o3s68W0Rbo3lRg0Sg2vXTLsfZXKMwg26r5W8bx8P5dKxdyTi6dNZykIuviZgeR28IU0f7565KIxIMltHVBKDlx7vSFRmD13MxxzU5aErOikAmXi19qyVvLDcMrKYBlx3SqJLC9ntgOmfm92X2UVLjWJ5F1LUqb80ePvxtU3DV6tmmUz1w0ppI2SWeiIbaJ0ZTvLvSKR7OMQ");
 }
+
+:root {
+  /* Primary colors - Changed to softer light blue */
+  --primary-blue: #60a5fa;        /* Changed from #2094f3 (more neon) to softer blue */
+  --secondary-blue: #3b82f6;      /* Changed from #1169e0 to softer blue */
+  --light-blue: #93c5fd;          /* Lighter shade */
+  
+  /* ...existing code... */
+}
