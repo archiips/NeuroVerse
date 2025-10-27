@@ -2,9 +2,11 @@ services:
   - type: web
     name: neuroverse-backend
     env: python
+    region: oregon
     plan: free
+    branch: main
     buildCommand: cd Backend && pip install -r requirements.txt && python init_db.py
     startCommand: cd Backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.9
+        value: "3.9"
