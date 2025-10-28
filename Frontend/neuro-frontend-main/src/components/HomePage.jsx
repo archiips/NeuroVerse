@@ -47,12 +47,10 @@ const HomePage = () => {
               <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
                   className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  <path d="M3 13h2v7H3v-7zm4-4h2v11H7V9zm4-4h2v15h-2V5zm4 3h2v12h-2V8zm4-3h2v15h-2V5z"/>
                 </svg>
               </div>
               <div>
@@ -68,12 +66,10 @@ const HomePage = () => {
               <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
                   className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18.5c-3.86-.97-7-5.12-7-9.5V8.3l7-3.89 7 3.89V11c0 4.38-3.14 8.53-7 9.5zm-1-6.5h2v2h-2v-2zm0-8h2v6h-2V6z"/>
                 </svg>
               </div>
               <div>
@@ -89,12 +85,10 @@ const HomePage = () => {
               <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
                   className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
                 </svg>
               </div>
               <div>
