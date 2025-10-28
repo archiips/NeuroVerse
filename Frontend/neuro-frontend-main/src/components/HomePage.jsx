@@ -44,16 +44,15 @@ const HomePage = () => {
           {/* Key Features */}
           <div className="grid gap-8 px-4 py-10 sm:px-10 md:grid-cols-3">
             <div className="flex flex-col gap-4">
-              <div
-                className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl"
-                data-id="31"
-              >
+              <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
                   className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="currentColor"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
               <div>
@@ -66,16 +65,15 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div
-                className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl"
-                data-id="35"
-              >
+              <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
                   className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="currentColor"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
                 </svg>
               </div>
               <div>
@@ -88,16 +86,15 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div
-                className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl"
-                data-id="39"
-              >
+              <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
                   className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="currentColor"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M4 4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h16v12H4V6zm2 2v8h12V8H6z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                 </svg>
               </div>
               <div>
