@@ -41,46 +41,73 @@ const HomePage = () => {
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Key Features</h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Our platform offers a suite of features designed to transform how you interact with neuroscience data.</p>
           </div>
-          {/* Key Features Grid */}
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-            <div className="flex flex-col gap-3 pb-3">
-              <div className="flex h-8 items-center justify-start gap-4 rounded-xl px-4">
-                <div className="text-gray-900 dark:text-white" data-icon="ChartBar" data-size="24px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z"></path>
-                  </svg>
-                </div>
-                <h2 className="text-gray-900 dark:text-white text-base font-bold leading-tight">Real Demographics</h2>
+          {/* Key Features */}
+          <div className="grid gap-8 px-4 py-10 sm:px-10 md:grid-cols-3">
+            <div className="flex flex-col gap-4">
+              <div
+                className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl"
+                data-id="31"
+              >
+                <svg
+                  className="h-16 w-16 text-background-light dark:text-gray-800"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
               </div>
-              <p className="text-gray-600 dark:text-[#92adc9] text-sm font-normal leading-normal">
-                View actual participant age, sex, and diagnosis distributions from 23 verified OpenNeuro research studies.
-              </p>
+              <div>
+                <p className="text-base font-medium leading-normal text-gray-900 dark:text-white">
+                  Real Demographic Data
+                </p>
+                <p className="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">
+                  Visualize actual participant demographics from 23 verified OpenNeuro datasets - age, sex, and diagnosis distributions parsed directly from participants.tsv files.
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col gap-3 pb-3">
-              <div className="flex h-8 items-center justify-start gap-4 rounded-xl px-4">
-                <div className="text-gray-900 dark:text-white" data-icon="CubeFocus" data-size="24px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M188,32H68A36,36,0,0,0,32,68V188a36,36,0,0,0,36,36H188a36,36,0,0,0,36-36V68A36,36,0,0,0,188,32ZM72,208a20,20,0,0,1-20-20V171.31l33.61-26.89a8,8,0,0,1,10,.06L120,165.24V208Zm136-20a20,20,0,0,1-20,20H136V152a8,8,0,0,0-13.21-6.06L80,180.94V68A20,20,0,0,1,100,48h88a20,20,0,0,1,20,20Z"></path>
-                  </svg>
-                </div>
-                <h2 className="text-gray-900 dark:text-white text-base font-bold leading-tight">Interactive 3D Charts</h2>
+            <div className="flex flex-col gap-4">
+              <div
+                className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl"
+                data-id="35"
+              >
+                <svg
+                  className="h-16 w-16 text-background-light dark:text-gray-800"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
               </div>
-              <p className="text-gray-600 dark:text-[#92adc9] text-sm font-normal leading-normal">
-                Explore data through rotating 3D bar charts and donut visualizations with zoom, pan, and hover details.
-              </p>
+              <div>
+                <p className="text-base font-medium leading-normal text-gray-900 dark:text-white">
+                  Interactive 3D Charts
+                </p>
+                <p className="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">
+                  Explore data through interactive 3D bar charts and donut charts powered by Plotly.js - rotate, zoom, and hover to see detailed statistics.
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col gap-3 pb-3">
-              <div className="flex h-8 items-center justify-start gap-4 rounded-xl px-4">
-                <div className="text-gray-900 dark:text-white" data-icon="Funnel" data-size="24px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M227.81,66.76l-.08-.09L192,25.91V16a8,8,0,0,0-8-8H72a8,8,0,0,0-8,8v9.91L28.27,66.67l-.08.09A16,16,0,0,0,24,78.33V208a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V78.33A16,16,0,0,0,227.81,66.76ZM40,78.33,76.69,40H179.31L216,78.33V80H40ZM216,208H40V96H216V208Z"></path>
-                  </svg>
-                </div>
-                <h2 className="text-gray-900 dark:text-white text-base font-bold leading-tight">Smart Search & Filter</h2>
+            <div className="flex flex-col gap-4">
+              <div
+                className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl"
+                data-id="39"
+              >
+                <svg
+                  className="h-16 w-16 text-background-light dark:text-gray-800"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M4 4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h16v12H4V6zm2 2v8h12V8H6z" />
+                </svg>
               </div>
-              <p className="text-gray-600 dark:text-[#92adc9] text-sm font-normal leading-normal">
-                Filter datasets by clinical populations (ADHD, depression, autism) or sort by participant count instantly.
-              </p>
+              <div>
+                <p className="text-base font-medium leading-normal text-gray-900 dark:text-white">
+                  Clinical Study Insights
+                </p>
+                <p className="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">
+                  Filter datasets by clinical populations (ADHD, Depression, Schizophrenia, Autism) and quickly compare participant demographics across studies.
+                </p>
+              </div>
             </div>
           </div>
         </div>
