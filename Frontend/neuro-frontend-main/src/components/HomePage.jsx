@@ -44,10 +44,10 @@ const HomePage = () => {
           {/* Key Features */}
           <div className="grid gap-8 px-4 py-10 sm:px-10 md:grid-cols-3">
             <div className="flex flex-col gap-4">
-              <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
+              <div className="bg-[#93c5fd] dark:bg-[#1e2933] flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
-                  className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="currentColor"
+                  className="h-20 w-20"
+                  fill="#ffffff"
                   viewBox="0 0 24 24"
                 >
                   <path d="M3 13h2v7H3v-7zm4-4h2v11H7V9zm4-4h2v15h-2V5zm4 3h2v12h-2V8zm4-3h2v15h-2V5z"/>
@@ -63,13 +63,13 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
+              <div className="bg-[#93c5fd] dark:bg-[#1e2933] flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
-                  className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="currentColor"
+                  className="h-20 w-20"
+                  fill="#ffffff"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18.5c-3.86-.97-7-5.12-7-9.5V8.3l7-3.89 7 3.89V11c0 4.38-3.14 8.53-7 9.5zm-1-6.5h2v2h-2v-2zm0-8h2v6h-2V6z"/>
+                  <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
                 </svg>
               </div>
               <div>
@@ -82,13 +82,13 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="bg-primary dark:bg-dark-border flex aspect-video w-full flex-col items-center justify-center rounded-xl">
+              <div className="bg-[#93c5fd] dark:bg-[#1e2933] flex aspect-video w-full flex-col items-center justify-center rounded-xl">
                 <svg
-                  className="h-16 w-16 text-background-light dark:text-gray-800"
-                  fill="currentColor"
+                  className="h-20 w-20"
+                  fill="#ffffff"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                 </svg>
               </div>
               <div>
